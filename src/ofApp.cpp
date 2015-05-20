@@ -16,6 +16,7 @@ void ofApp::setup(){
     // init face detector
 //	image.loadImage("test.jpg");
     hair.loadImage("nito.png");
+    glass.loadImage("glass.png");
 	finder.setup("haarcascade_frontalface_default.xml");
 	finder.findHaarObjects(image);
 }
@@ -40,11 +41,16 @@ void ofApp::update(){
 void ofApp::draw(){
     image.draw(0, 0, ofGetWidth(), ofGetHeight());
 	ofNoFill();
+    
+    // draw hair
 	for(unsigned int i = 0; i < finder.blobs.size(); i++) {
 		ofRectangle cur = finder.blobs[i].boundingRect;
-//		ofRect(cur.x, cur.y, cur.width, cur.height);
         
         ofPoint center(cur.x + cur.width/2, cur.y + cur.height/2);
+       
+        float scale = 1.34785;
+        float xpos = 1;
+        float ypos = -63;
         
         float width = cur.width * scale;
         float height = cur.height * scale;
@@ -55,6 +61,39 @@ void ofApp::draw(){
         hair.draw(center.x - width/2, center.y - height/2, width, height);
 	}
     
+    // draw glass
+	for(unsigned int i = 0; i < finder.blobs.size(); i++) {
+		ofRectangle cur = finder.blobs[i].boundingRect;
+        
+        ofPoint center(cur.x + cur.width/2, cur.y + cur.height/2);
+       
+        float scale = 1.34785;
+        float xpos = 1;
+        float ypos = -63;
+        
+        float width = cur.width * scale;
+        float height = cur.height * scale;
+        
+        center.x += xpos;
+        center.y += ypos;
+        
+        hair.draw(center.x - width/2, center.y - height/2, width, height);
+	}
+    
+	for(unsigned int i = 0; i < finder.blobs.size(); i++) {
+		ofRectangle cur = finder.blobs[i].boundingRect;
+        
+        ofPoint center(cur.x + cur.width/2, cur.y + cur.height/2);
+        
+       
+        float width = cur.width * scale;
+        float height = width * glass.getHeight() / glass.getWidth();
+        
+        center.x += xpos;
+        center.y += ypos;
+        
+        glass.draw(center.x - width/2, center.y - height/2, width, height);
+	}
 }
 
 //--------------------------------------------------------------

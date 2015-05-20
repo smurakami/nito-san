@@ -21,6 +21,7 @@ public:
     void gotMessage(ofMessage msg);
     
     ofImage hair;
+    ofImage glass;
     ofImage image;
     ofxCvHaarFinder finder;
     ofVideoGrabber camera;
